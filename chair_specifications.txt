@@ -1,0 +1,245 @@
+PREMIUM WOODEN CHAIR - VISUAL SPECIFICATIONS
+==============================================
+
+PROJECT: Landing Page Hero Visual
+PURPOSE: First attraction for furniture marketplace website
+STYLE: Ultra-premium, modern, dynamic product photography
+
+==============================================
+TECHNICAL SPECIFICATIONS
+==============================================
+
+RESOLUTION:
+- Output: 3840 x 2160 pixels (4K UHD)
+- Aspect Ratio: 16:9
+- DPI: 72 (web) / 300 (print if needed)
+- Format: PNG with alpha transparency
+
+RENDER SETTINGS:
+- Engine: Cycles
+- Samples: 256 (minimum) / 512 (optimal)
+- Denoising: Enabled
+- Color Space: sRGB
+- View Transform: Filmic
+- Look: High Contrast
+
+==============================================
+CHAIR DESIGN REQUIREMENTS
+==============================================
+
+STYLE:
+- Modern contemporary design
+- Clean lines and refined edges
+- Premium craftsmanship visible
+- Suitable for high-end furniture marketplace
+
+WOOD TYPE:
+- Rich brown wooden finish
+- Natural wood grain visible
+- Polished/satin finish (not matte, not glossy)
+- Premium hardwood appearance (walnut, oak, or mahogany style)
+
+COMPONENTS (Must be separate objects):
+1. Four legs (individual objects)
+2. Seat base
+3. Backrest
+4. Optional: Armrests (if design includes)
+5. Optional: Support bars/stretchers
+
+PROPORTIONS:
+- Realistic human-scale dimensions
+- Seat height: ~45-50cm from ground
+- Overall height: ~80-95cm
+- Seat depth: ~40-45cm
+- Width: ~45-55cm
+
+==============================================
+VISUAL COMPOSITION
+==============================================
+
+CAMERA:
+- View: 3/4 perspective (45° horizontal angle)
+- Height: Slightly above seat level (20° vertical)
+- Focal Length: 85mm (portrait lens)
+- Distance: 5 units from origin
+- Framing: Chair centered, balanced spacing
+
+BACKGROUND:
+- Pure white (#FFFFFF)
+- No gradients or textures
+- Clean and minimal
+- Suitable for web overlay text
+
+LIGHTING SETUP:
+- Style: Professional studio HDR lighting
+- Key Light: Top-right, 45° angle, warm tone (1000W equivalent)
+- Fill Light: Left side, softer, cool tone (300W equivalent)
+- Rim Light: Back, creates edge definition (500W equivalent)
+- Shadows: Soft, realistic, subtle
+- Reflections: Gentle on polished wood surfaces
+
+==============================================
+EXPLODED/ASSEMBLY VIEW
+==============================================
+
+CONCEPT:
+- Semi-exploded state showing chair parts
+- Parts appear to be floating and about to assemble
+- Smooth, intentional spacing (not chaotic)
+- Suitable for "parts coming together" animation
+
+SPACING:
+- Explosion distance: 0.3 units (adjustable)
+- Parts aligned on assembly axis
+- Maintain visual connection between parts
+- Legs slightly separated from seat
+- Backrest floating above seat
+- All parts facing correct assembly direction
+
+VISUAL INTENT:
+- Dynamic and modern
+- Shows craftsmanship and construction
+- Implies customization and quality
+- Creates visual interest and movement
+
+==============================================
+MATERIAL SPECIFICATIONS
+==============================================
+
+WOOD MATERIAL:
+- Base Color: Rich brown (RGB: 64, 38, 20 approximately)
+- Metallic: 0.0 (wood is non-metallic)
+- Specular: 0.5 (moderate reflectivity)
+- Roughness: 0.15 (polished finish)
+- Clearcoat: 0.3 (extra polish layer)
+- Clearcoat Roughness: 0.1
+
+WOOD GRAIN:
+- Procedural wave texture
+- Scale: 15.0
+- Distortion: 2.0
+- Detail: 3.0
+- Direction: Following wood grain natural flow
+- Variation: Subtle color variation between grain lines
+
+FINISH:
+- Polished but not mirror-like
+- Visible reflections of environment
+- Soft highlights on edges
+- Natural wood character preserved
+
+==============================================
+QUALITY BENCHMARKS
+==============================================
+
+REFERENCE STYLE:
+- Apple product photography (iPhone, MacBook launches)
+- IKEA premium catalog imagery
+- West Elm / CB2 product shots
+- Luxury interior design brand visuals
+- Modern startup landing pages (Airbnb, Stripe style)
+
+QUALITY INDICATORS:
+✓ Sharp focus throughout (or subtle depth of field)
+✓ Realistic materials with proper reflections
+✓ Soft, natural shadows
+✓ High dynamic range (visible detail in highlights and shadows)
+✓ Clean, professional composition
+✓ Premium feel that conveys quality and craftsmanship
+✓ Web-ready optimization
+
+==============================================
+BRAND ALIGNMENT
+==============================================
+
+MARKETPLACE CONCEPT:
+- Location-based furniture marketplace
+- Connects customers with local furniture stores
+- Focus on premium quality and customization
+- Fast local delivery
+- Modern, tech-forward shopping experience
+
+VISUAL MESSAGE:
+- "Premium quality furniture"
+- "Modern and dynamic shopping"
+- "Craftsmanship and attention to detail"
+- "Customizable and flexible"
+- "Local and accessible"
+
+TARGET AUDIENCE:
+- Modern homeowners (25-45 years old)
+- Design-conscious consumers
+- Value quality and craftsmanship
+- Appreciate technology and convenience
+- Willing to invest in premium furniture
+
+==============================================
+DELIVERABLES
+==============================================
+
+PRIMARY OUTPUT:
+- chair_hero_4k.png (3840x2160, transparent background)
+
+OPTIONAL OUTPUTS:
+- chair_hero_hd.png (1920x1080, for faster loading)
+- chair_hero_mobile.png (1080x607, mobile optimized)
+- chair_assembly_animation.mp4 (if animated)
+- chair_parts_sequence/ (PNG sequence for web animation)
+
+FILE NAMING:
+- Use descriptive names
+- Include resolution in filename
+- Version numbers if iterating (v1, v2, etc.)
+
+==============================================
+POST-PRODUCTION (Optional)
+==============================================
+
+If needed, apply subtle adjustments:
+- Slight vignette for focus
+- Color grading (warm highlights, cool shadows)
+- Minimal sharpening
+- Compression optimization for web
+
+Tools: Photoshop, GIMP, or Blender Compositor
+
+==============================================
+USAGE CONTEXT
+==============================================
+
+LANDING PAGE HERO SECTION:
+- Above the fold (first thing users see)
+- Overlaid with headline text
+- Call-to-action button nearby
+- Responsive across devices
+- Fast loading time critical
+
+ANIMATION POTENTIAL:
+- Parts animate together on page load
+- Smooth, professional motion
+- 2-3 second duration
+- Enhances premium feel
+- Optional: Parallax scroll effect
+
+==============================================
+SUCCESS CRITERIA
+==============================================
+
+The visual is successful if it:
+✓ Immediately grabs attention
+✓ Conveys premium quality
+✓ Looks modern and professional
+✓ Represents the brand accurately
+✓ Works well with text overlay
+✓ Loads quickly on web
+✓ Scales well across devices
+✓ Differentiates from competitors
+
+==============================================
+
+Notes:
+- Prioritize quality over speed
+- Test on multiple screens before finalizing
+- Get feedback on composition and lighting
+- Iterate if needed
+- Save all project files for future edits

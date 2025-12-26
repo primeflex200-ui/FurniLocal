@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Test - GPU Optimization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 60px;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px) translateZ(0);
+        }
+
+        .test-card h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .test-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+        }
+
+        .status.warning {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffaa00;
+        }
+
+        .status.error {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff0000;
+        }
+
+        .metrics {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            opacity: 0.7;
+        }
+
+        .metric-value {
+            font-weight: 600;
+        }
+
+        .test-animation {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            margin: 20px auto;
+            animation: float 3s ease-in-out infinite;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate3d(0, 0, 0);
+            }
+            50% {
+                transform: translate3d(0, -20px, 0);
+            }
+        }
+
+        .console-output {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 40px;
+        }
+
+        .console-line {
+            padding: 5px 0;
+            opacity: 0.9;
+        }
+
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        button:hover {
+            transform: translateY(-2px) translateZ(0);
+        }
+
+        button:active {
+            transform: translateY(0) translateZ(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 GPU Optimization Test</h1>
+        <p class="subtitle">Real-time performance monitoring and validation</p>
+
+        <div class="test-grid">
+            <!-- GPU Detection -->
+            <div class="test-card">
+                <h2>🎮 GPU Detection</h2>
+                <p>Checking WebGL support and GPU capabilities</p>
+                <span class="status" id="gpu-status">Testing...</span>
+                <div class="metrics" id="gpu-metrics"></div>
+            </div>
+
+            <!-- Performance Test -->
+            <div class="test-card">
+                <h2>📊 Performance</h2>
+                <p>Measuring frame rate and render time</p>
+                <span class="status" id="perf-status">Testing...</span>
+                <div class="metrics" id="perf-metrics"></div>
+            </div>
+
+            <!-- Animation Test -->
+            <div class="test-card">
+                <h2>✨ Animation</h2>
+                <p>GPU-accelerated transform animations</p>
+                <div class="test-animation"></div>
+                <span class="status success">Active</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <button onclick="runTests()">🔄 Run Tests Again</button>
+            <button onclick="window.location.href='index.html'">🏠 Go to Main Site</button>
+        </div>
+
+        <div class="console-output" id="console"></div>
+    </div>
+
+    <script type="module">
+        const consoleEl = document.getElementById('console');
+        
+        function log(message, type = 'info') {
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            line.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleEl.appendChild(line);
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+            console.log(message);
+        }
+
+        // GPU Detection Test
+        function testGPU() {
+            log('🎮 Testing GPU capabilities...');
+            
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            
+            if (!gl) {
+                document.getElementById('gpu-status').className = 'status error';
+                document.getElementById('gpu-status').textContent = 'Not Supported';
+                log('❌ WebGL not supported');
+                return;
+            }
+
+            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+            const vendor = gl.getParameter(gl.VENDOR);
+            const renderer = gl.getParameter(gl.RENDERER);
+            
+            let unmaskedRenderer = renderer;
+            if (debugInfo) {
+                unmaskedRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+            }
+
+            const metrics = document.getElementById('gpu-metrics');
+            metrics.innerHTML = `
+                <div class="metric-row">
+                    <span class="metric-label">Vendor</span>
+                    <span class="metric-value">${vendor}</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Renderer</span>
+                    <span class="metric-value">${renderer}</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">GPU</span>
+                    <span class="metric-value">${unmaskedRenderer}</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Max Texture</span>
+                    <span class="metric-value">${gl.getParameter(gl.MAX_TEXTURE_SIZE)}px</span>
+                </div>
+            `;
+
+            document.getElementById('gpu-status').className = 'status success';
+            document.getElementById('gpu-status').textContent = 'Supported';
+            
+            log(`✅ GPU: ${unmaskedRenderer}`);
+            log(`✅ Max Texture Size: ${gl.getParameter(gl.MAX_TEXTURE_SIZE)}px`);
+        }
+
+        // Performance Test
+        function testPerformance() {
+            log('📊 Testing performance...');
+            
+            let frameCount = 0;
+            let lastTime = performance.now();
+            let fps = 0;
+
+            function measureFPS() {
+                frameCount++;
+                const currentTime = performance.now();
+                
+                if (currentTime >= lastTime + 1000) {
+                    fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+                    const frameTime = ((currentTime - lastTime) / frameCount).toFixed(2);
+                    
+                    const metrics = document.getElementById('perf-metrics');
+                    metrics.innerHTML = `
+                        <div class="metric-row">
+                            <span class="metric-label">FPS</span>
+                            <span class="metric-value">${fps}</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Frame Time</span>
+                            <span class="metric-value">${frameTime}ms</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Target</span>
+                            <span class="metric-value">60 FPS</span>
+                        </div>
+                    `;
+
+                    const statusEl = document.getElementById('perf-status');
+                    if (fps >= 60) {
+                        statusEl.className = 'status success';
+                        statusEl.textContent = 'Excellent';
+                    } else if (fps >= 50) {
+                        statusEl.className = 'status warning';
+                        statusEl.textContent = 'Good';
+                    } else {
+                        statusEl.className = 'status error';
+                        statusEl.textContent = 'Poor';
+                    }
+
+                    log(`📊 FPS: ${fps} | Frame Time: ${frameTime}ms`);
+                    
+                    frameCount = 0;
+                    lastTime = currentTime;
+                }
+                
+                requestAnimationFrame(measureFPS);
+            }
+
+            measureFPS();
+        }
+
+        // Run all tests
+        window.runTests = function() {
+            consoleEl.innerHTML = '';
+            log('🚀 Starting GPU optimization tests...');
+            log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            
+            setTimeout(() => testGPU(), 100);
+            setTimeout(() => testPerformance(), 200);
+            
+            log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            log('✅ All tests initiated');
+        };
+
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            runTests();
+        });
+    </script>
+</body>
+</html>
