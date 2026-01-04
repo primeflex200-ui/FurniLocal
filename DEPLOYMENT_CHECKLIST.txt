@@ -1,0 +1,42 @@
+🚀 NETLIFY DEPLOYMENT - QUICK CHECKLIST
+
+✅ PREPARATION (DONE):
+[✓] netlify.toml created
+[✓] _redirects created
+[✓] .gitignore created
+[✓] README.md created
+[✓] All files ready
+
+📋 YOUR TASKS:
+
+OPTION 1 - QUICK DEPLOY (2 minutes):
+[ ] Go to: https://app.netlify.com/drop
+[ ] Drag your project folder
+[ ] Wait for deployment
+[ ] Copy your Netlify URL
+[ ] Add URL to Supabase redirect URLs
+[ ] Test your live site
+
+OPTION 2 - GITHUB DEPLOY (5 minutes):
+[ ] Create GitHub repository
+[ ] Push code to GitHub
+[ ] Connect to Netlify
+[ ] Deploy from GitHub
+[ ] Copy your Netlify URL
+[ ] Add URL to Supabase redirect URLs
+[ ] Test your live site
+
+🔧 AFTER DEPLOYMENT:
+[ ] Update Supabase redirect URLs with your Netlify URL
+[ ] Test sign up/sign in
+[ ] Test Google OAuth (if configured)
+[ ] Test email link
+[ ] Test on mobile
+[ ] Share your live URL!
+
+📝 IMPORTANT URLS:
+- Netlify: https://app.netlify.com
+- Supabase: https://app.supabase.com/project/fwropsaxmenkagyfdwcb
+- Your site: [Will be provided after deployment]
+
+🎉 READY TO DEPLOY!

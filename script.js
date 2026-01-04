@@ -19,16 +19,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const showSignupBtn = document.getElementById('showSignup');
     const showLoginBtn = document.getElementById('showLogin');
     
-    // Get all "Get Started" buttons
-    const getStartedButtons = document.querySelectorAll('.btn-primary');
+    // Function to initialize Get Started button in navbar
+    function initGetStartedButton() {
+        const navbarButton = document.querySelector('.navbar-auth-btn');
+        if (navbarButton) {
+            // Remove old listeners by cloning
+            const newButton = navbarButton.cloneNode(true);
+            navbarButton.parentNode.replaceChild(newButton, navbarButton);
+            
+            // Add click listener
+            newButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                openAuthModal();
+            });
+        }
+    }
     
-    // Open modal when clicking "Get Started"
-    getStartedButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            openAuthModal();
-        });
-    });
+    // Initialize Get Started button
+    initGetStartedButton();
+    
+    // Make it globally available for re-initialization after logout
+    window.initGetStartedButton = initGetStartedButton;
     
     // Close modal functions
     function closeAuthModal() {
@@ -90,34 +101,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Handle login form submission (placeholder for API integration)
+    // Handle login form submission (Supabase integration)
     const loginFormElement = document.querySelector('#loginForm form');
     if (loginFormElement) {
-        loginFormElement.addEventListener('submit', function(e) {
+        loginFormElement.addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
-            console.log('Login attempt:', { email, password });
-            alert('Login functionality will be integrated with API');
+            console.log('Login attempt:', { email });
             
-            // TODO: Add your API call here
-            // Example:
-            // fetch('/api/login', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ email, password })
-            // })
+            // Supabase login
+            if (window.supabaseAuth) {
+                await window.supabaseAuth.signIn(email, password);
+            } else {
+                alert('Authentication system not ready. Please refresh the page.');
+            }
         });
     }
     
-    // Handle signup form submission (placeholder for API integration)
+    // Handle signup form submission (Supabase integration)
     const signupFormElement = document.querySelector('#signupForm form');
     if (signupFormElement) {
-        signupFormElement.addEventListener('submit', function(e) {
+        signupFormElement.addEventListener('submit', async function(e) {
             e.preventDefault();
             const name = document.getElementById('signupName').value;
             const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
             const password = document.getElementById('signupPassword').value;
             const confirmPassword = document.getElementById('signupConfirmPassword').value;
             
@@ -126,35 +136,115 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            console.log('Signup attempt:', { name, email, password });
-            alert('Signup functionality will be integrated with API');
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                return;
+            }
             
-            // TODO: Add your API call here
-            // Example:
-            // fetch('/api/signup', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ name, email, password })
-            // })
+            console.log('Signup attempt:', { name, email, phone });
+            
+            // Supabase signup with phone number
+            if (window.supabaseAuth) {
+                await window.supabaseAuth.signUp(email, password, name, phone);
+            } else {
+                alert('Authentication system not ready. Please refresh the page.');
+            }
         });
     }
     
-    // Handle Google Sign-in (placeholder for API integration)
+    // Handle Google Sign-in (Direct Supabase call - SIMPLIFIED)
     const googleButtons = document.querySelectorAll('.btn-google');
     googleButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', async function(e) {
             e.preventDefault();
-            console.log('Google Sign-in clicked');
-            alert('Google Sign-in will be integrated with Google OAuth API');
+            console.log('🔵 Google Sign-in clicked');
             
-            // TODO: Add your Google OAuth integration here
-            // Example:
-            // google.accounts.id.initialize({
-            //     client_id: 'YOUR_GOOGLE_CLIENT_ID',
-            //     callback: handleGoogleSignIn
-            // });
+            try {
+                // Wait a moment for Supabase to be ready
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                // Get the Supabase client directly
+                const client = window.supabaseClient || window.supabase?.createClient(
+                    'https://fwropsaxmenkagyfdwcb.supabase.co',
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3cm9wc2F4bWVua2FneWZkd2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3MzcwOTYsImV4cCI6MjA4MjMxMzA5Nn0.symhG6e7GyitYssZHPNoM3x4uTXsW_hcm19BEzrJH7Y'
+                );
+                
+                if (!client) {
+                    throw new Error('Supabase not available');
+                }
+                
+                console.log('✅ Starting Google OAuth...');
+                
+                // Call Google OAuth with correct redirect URL
+                const currentUrl = window.location.origin; // Gets current URL automatically
+                const { data, error } = await client.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: currentUrl
+                    }
+                });
+                
+                if (error) {
+                    console.error('OAuth error:', error);
+                    throw error;
+                }
+                
+                console.log('✅ Google OAuth initiated!', data);
+                
+            } catch (error) {
+                console.error('❌ Google Sign-in Error:', error);
+                
+                // More specific error messages
+                let errorMessage = 'Google sign-in failed.\n\n';
+                
+                if (error.message.includes('redirect')) {
+                    errorMessage += '❌ Redirect URL not configured!\n\n';
+                    errorMessage += 'Fix:\n';
+                    errorMessage += '1. Go to Supabase Dashboard\n';
+                    errorMessage += '2. Authentication → URL Configuration\n';
+                    errorMessage += '3. Add: http://localhost:8080\n';
+                    errorMessage += '4. Click Save\n';
+                    errorMessage += '5. Refresh this page';
+                } else if (error.message.includes('provider')) {
+                    errorMessage += '❌ Google provider not enabled!\n\n';
+                    errorMessage += 'Fix:\n';
+                    errorMessage += '1. Go to Supabase Dashboard\n';
+                    errorMessage += '2. Authentication → Providers\n';
+                    errorMessage += '3. Enable Google provider\n';
+                    errorMessage += '4. Add Client ID and Secret\n';
+                    errorMessage += '5. Click Save';
+                } else {
+                    errorMessage += 'Error: ' + error.message + '\n\n';
+                    errorMessage += 'Please check:\n';
+                    errorMessage += '1. Redirect URLs in Supabase\n';
+                    errorMessage += '2. Google provider is enabled\n';
+                    errorMessage += '3. See GOOGLE_LOGIN_FIX_NOW.md';
+                }
+                
+                alert(errorMessage);
+            }
         });
     });
+    
+    // Handle forgot password
+    const forgotPasswordLink = document.querySelector('.forgot-password');
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            
+            if (!email) {
+                alert('Please enter your email address first.');
+                return;
+            }
+            
+            if (window.supabaseAuth) {
+                await window.supabaseAuth.resetPassword(email);
+            } else {
+                alert('Authentication system not ready. Please refresh the page.');
+            }
+        });
+    }
 
     // ============================================
     // ORIGINAL FUNCTIONALITY

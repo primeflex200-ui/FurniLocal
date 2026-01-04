@@ -6,12 +6,17 @@
     <title>Premium Furniture Marketplace - Find Quality Furniture Near You</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="styles-gpu-optimized.css">
+    <link rel="stylesheet" href="floating-dock.css">
     
     <!-- Preload critical assets -->
     <link rel="preload" href="chair-main.jpg" as="image">
     
     <!-- Configuration -->
     <script src="config.js"></script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js?v=2"></script>
     
     <!-- GSAP Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -21,14 +26,17 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <div class="nav-brand">FurniLocal</div>
-            <ul class="nav-menu">
-                <li><a href="#browse" class="cursor-target">Browse</a></li>
-                <li><a href="#stores" class="cursor-target">Local Stores</a></li>
-                <li><a href="#custom" class="cursor-target">Customize</a></li>
-                <li><a href="#about" class="cursor-target">About</a></li>
+            <div class="nav-brand">
+                <img src="logo-main.jpg" alt="FurniLocal Logo" class="nav-logo" draggable="false" oncontextmenu="return false;">
+                <span>FurniLocal</span>
+            </div>
+            <ul class="nav-menu" style="display: none;">
+                <li><a href="#browse">Browse</a></li>
+                <li><a href="#stores">Local Stores</a></li>
+                <li><a href="#custom">Customize</a></li>
+                <li><a href="#about">About</a></li>
             </ul>
-            <button class="btn-primary cursor-target">Get Started</button>
+            <button class="btn-primary navbar-auth-btn">Get Started</button>
         </div>
     </nav>
 
@@ -97,6 +105,11 @@
                         </div>
                         
                         <div class="form-group">
+                            <label for="signupPhone">Phone Number (Optional)</label>
+                            <input type="tel" id="signupPhone" placeholder="+1 (555) 123-4567">
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="signupPassword">Password</label>
                             <input type="password" id="signupPassword" placeholder="Create a password" required>
                         </div>
@@ -146,8 +159,8 @@
                         Premium quality, custom designs, and fast delivery to your door.
                     </p>
                     <div class="hero-cta">
-                        <button class="btn-large btn-primary cursor-target">Explore Collection</button>
-                        <button class="btn-large btn-secondary cursor-target">Find Stores Near You</button>
+                        <button class="btn-large btn-primary">Explore Collection</button>
+                        <button class="btn-large btn-secondary">Find Stores Near You</button>
                     </div>
                     <div class="hero-stats">
                         <div class="stat">
@@ -201,26 +214,26 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features">
+    <section class="features" id="browse">
         <div class="container">
             <h2 class="section-title">Why Choose FurniLocal</h2>
             <div class="features-grid">
-                <div class="feature-card cursor-target">
+                <div class="feature-card">
                     <div class="feature-icon">🎨</div>
                     <h3>Custom Designs</h3>
                     <p>Personalize every detail to match your unique style and space requirements.</p>
                 </div>
-                <div class="feature-card cursor-target">
+                <div class="feature-card">
                     <div class="feature-icon">📍</div>
                     <h3>Local Artisans</h3>
                     <p>Support local craftsmen and get authentic, handmade furniture pieces.</p>
                 </div>
-                <div class="feature-card cursor-target">
+                <div class="feature-card">
                     <div class="feature-icon">⚡</div>
                     <h3>Fast Delivery</h3>
                     <p>Same-day or next-day delivery from stores near you. No long waits.</p>
                 </div>
-                <div class="feature-card cursor-target">
+                <div class="feature-card">
                     <div class="feature-icon">✨</div>
                     <h3>Premium Quality</h3>
                     <p>Handpicked selection of high-quality materials and expert craftsmanship.</p>
@@ -229,32 +242,35 @@
         </div>
     </section>
 
+    <!-- Customize Section (placeholder for floating dock) -->
+    <section id="custom" style="min-height: 100px;"></section>
+
     <!-- CTA Section -->
-    <section class="cta-section">
+    <section class="cta-section" id="stores">
         <div class="container">
             <div class="cta-content">
                 <h2>Ready to Transform Your Space?</h2>
                 <p>Browse thousands of premium furniture pieces from local stores</p>
-                <button class="btn-large btn-white cursor-target">Start Shopping</button>
+                <button class="btn-large btn-white">Start Shopping</button>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="contact-section">
+    <section class="contact-section" id="about">
         <div class="container">
             <h2 class="section-title">Contact Us</h2>
             <p class="contact-subtitle">Get in touch with us for inquiries, custom orders, or support</p>
             
             <div class="contact-options">
-                <a href="mailto:furnilocal@gmail.com" class="contact-card cursor-target">
+                <a href="#" class="contact-card" id="emailCard">
                     <div class="contact-icon">📧</div>
                     <h3>Email Us</h3>
-                    <p class="contact-detail">furnilocal@gmail.com</p>
+                    <p class="contact-detail">hellofurnilocal@gmail.com</p>
                     <span class="contact-action">Send Email →</span>
                 </a>
                 
-                <a href="https://instagram.com/furnilocal_official" target="_blank" rel="noopener noreferrer" class="contact-card cursor-target">
+                <a href="https://instagram.com/furnilocal_official" target="_blank" rel="noopener noreferrer" class="contact-card">
                     <div class="contact-icon">📱</div>
                     <h3>Follow on Instagram</h3>
                     <p class="contact-detail">@furnilocal_official</p>
@@ -264,10 +280,31 @@
         </div>
     </section>
 
-    <script type="module" src="script.js"></script>
+    <script type="module" src="script.js?v=5"></script>
     <script type="module" src="hero-gpu-optimized.js"></script>
     <!-- <script type="module" src="performance-monitor.js"></script> -->
-    <script src="cursor-standalone.js"></script>
+    <script defer src="supabase-auth.js?v=3"></script>
+
     <script src="text-animation.js"></script>
+    <script src="floating-dock.js"></script>
+    
+    <!-- Email handler script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailCard = document.getElementById('emailCard');
+            if (emailCard) {
+                emailCard.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Open Gmail compose in new tab
+                    const email = 'hellofurnilocal@gmail.com';
+                    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`;
+                    
+                    // Try to open Gmail web
+                    window.open(gmailUrl, '_blank');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

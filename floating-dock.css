@@ -1,0 +1,69 @@
+/* ============================================
+   FLOATING DOCK NAVIGATION - TOP NAVBAR
+   Modern animated navigation menu in header
+   ============================================ */
+
+.floating-dock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.floating-dock-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #6B6B6B;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 25px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.floating-dock-item:hover {
+    color: #2D1810;
+    background: rgba(212, 165, 116, 0.12);
+    transform: translateY(-2px);
+}
+
+.floating-dock-item.active {
+    color: #2D1810;
+    background: rgba(212, 165, 116, 0.15);
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .floating-dock {
+        padding: 6px 12px;
+        gap: 4px;
+    }
+    
+    .floating-dock-item {
+        padding: 8px 14px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-dock {
+        padding: 6px 10px;
+        gap: 2px;
+    }
+    
+    .floating-dock-item {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+}
